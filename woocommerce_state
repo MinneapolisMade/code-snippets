@@ -1,0 +1,36 @@
+// Setting one state only
+add_filter( 'woocommerce_states', 'custom_woocommerce_state', 10, 1 );
+function custom_woocommerce_state( $states ) {
+    // Returning a unique state
+    return array('MN' => array('MN' => 'Minnesota'));
+}
+// Only one country at checkout
+add_filter( 'woocommerce_checkout_fields', 'custom_checkout_fields', 10, 1 );
+function custom_checkout_fields( $fields ) {
+
+    $fields['shipping']['shipping_city']['type'] = 'select';
+    $fields['shipping']['shipping_city']['options'] = array('Saint Cloud' => 'Saint Cloud');
+
+    return $fields;
+}
+// Replace "Shipping" with text of your choice ex. Delivery
+
+add_filter( 'woocommerce_shipping_package_name' , 'woocommerce_replace_text_shipping_to_delivery', 10, 3);
+
+function woocommerce_replace_text_shipping_to_delivery($package_name, $i, $package){
+    return sprintf( _nx( 'Delivery', 'Delivery %d', ( $i + 1 ), 'shipping packages', 'https://www.lilyswingstech.com' ), ( $i + 1 ) );
+}
+
+// Translate strings using 'gettext' filter hook
+dd_filter('gettext', 'custom_strings_translation', 20, 3);
+
+function custom_strings_translation( $translated_text, $text, $domain ) {
+
+  switch ( $translated_text ) {
+    case 'Ship to a different address?' : 
+      $translated_text =  __( 'Deliver to a different address', '__x__' ); 
+      break;
+  }
+
+  return $translated_text;
+}
