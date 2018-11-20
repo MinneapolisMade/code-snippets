@@ -1,4 +1,4 @@
-// Change the text on dynamically generated text
+// Change the text on dynamically generated text add to your functions file
 add_filter('gettext', 'translate_reply');
 add_filter('ngettext', 'translate_reply');
 
