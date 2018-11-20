@@ -1,0 +1,8 @@
+// Change the text on dynamically generated text
+add_filter('gettext', 'translate_reply');
+add_filter('ngettext', 'translate_reply');
+
+function translate_reply($translated) {
+$translated = str_ireplace('Example Text', 'Example Replacement Text', $translated);
+return $translated;
+}
